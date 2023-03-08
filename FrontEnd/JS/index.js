@@ -8,6 +8,19 @@
 
 var data_Api ; 
 
+// function displayFiltres (data) {
+//     const H2 = document.querySelector('#portfolio H2')
+//     const filtresDIVHTML = document.createElement("div")
+
+//     // H2.insertAdjacentElement("afterend", filtresDIVHTML);
+//     H2.after(filtresDIVHTML)
+//         data.forEach (function (filtreHTML) {
+//             var filtreHTML = document.createElement('p');
+//             filtreHTML.textContent = filtreHTML
+//             filtreHTML.class = "filtre"
+//             filtresDIVHTML.appendChild(filtreHTML);
+//         });
+// }
 
 function displayData (data) {
 
@@ -37,7 +50,9 @@ async function fetchData(url) {
     
 async function main  () {
     const api_url = "http://localhost:5678/api/works";
+    const filtres = ['Tous','Objets','Appartements','Hôtels & restaurants']
     await fetchData(api_url);
+    // await displayFiltres (filtres) ;
 }
 
 
