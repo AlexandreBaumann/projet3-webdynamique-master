@@ -8,6 +8,7 @@
 
 var data_Api ; 
 
+
 function displayData (data) {
 
     const galleryHTML = document.getElementsByClassName('gallery')
@@ -16,10 +17,16 @@ function displayData (data) {
         const imageHTML = document.createElement('img')
         const figcaptionHTML = document.createElement('figcaption')
         imageHTML.src = element.imageUrl
+        figcaptionHTML.textContent = element.title
         cardHTML.appendChild(imageHTML)
+        cardHTML.appendChild(figcaptionHTML)
         galleryHTML[0].appendChild(cardHTML)
+        // const cardHTML = '<figure><img src = ${element.imageUrl}></img><figcaption>${element.title}</figcaption></figure>'
+        // galleryHTML[0].appendChild(cardHTML)  
     });
 }
+
+
   
 async function fetchData(url) {
     const response = await fetch(url);
