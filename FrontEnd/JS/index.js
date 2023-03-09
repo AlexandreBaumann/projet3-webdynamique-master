@@ -8,19 +8,39 @@
 
 var data_Api ; 
 
-// function displayFiltres (data) {
-//     const H2 = document.querySelector('#portfolio H2')
-//     const filtresDIVHTML = document.createElement("div")
+function displayFiltres(filtres) {
+    const H2 = document.querySelector('#portfolio H2');
+    const filtresDIV = document.createElement("div");
+    filtresDIV.setAttribute("id", "filtres")
+    H2.after(filtresDIV);
+  
+    let filtresHTML = "";
+    for (let filtre of filtres) {
+      filtresHTML += `<input type="button" id="${filtre}" value="${filtre}">`;
+    }
+    filtresDIV.innerHTML = filtresHTML;
+  }
 
-//     // H2.insertAdjacentElement("afterend", filtresDIVHTML);
-//     H2.after(filtresDIVHTML)
-//         data.forEach (function (filtreHTML) {
-//             var filtreHTML = document.createElement('p');
-//             filtreHTML.textContent = filtreHTML
-//             filtreHTML.class = "filtre"
-//             filtresDIVHTML.appendChild(filtreHTML);
-//         });
-// }
+  function filterData(event) {
+    const buttonId = event.target.id;
+    console.log(`Button clicked: ${buttonId}`);
+  }
+  
+  const tousButton = document.getElementById("Tous");
+  const objetsButton = document.getElementById("Objets");
+  const appartementsButton = document.getElementById("Appartements");
+  const hotelsButton = document.getElementById("Hôtels & restaurants");
+  
+  tousButton.addEventListener("click", handleClick);
+  objetsButton.addEventListener("click", handleClick);
+  appartementsButton.addEventListener("click", handleClick);
+  hotelsButton.addEventListener("click", handleClick);
+  
+
+// const boutons = document.querySelector('#filtres input');
+// boutons.addEventListener("click", filterData)
+
+
 
 function displayData (data) {
 
@@ -50,43 +70,17 @@ async function fetchData(url) {
     
 async function main  () {
     const api_url = "http://localhost:5678/api/works";
-    const filtres = ['Tous','Objets','Appartements','Hôtels & restaurants']
+    const filtres = ['Tous','Objets','Appartements','Hôtels & restaurants'];
     await fetchData(api_url);
-    // await displayFiltres (filtres) ;
+    await displayFiltres (filtres) ;
 }
 
 
 main()
 
+
+
+
+
 // interpolation
-
-
-
-
-
-// function createCard (object) {
-//     const gallery = document.getElementsByClassName('gallery')
-//     const card = document.createElement('figure')
-//     card.classname = 'card'
-
-
-//     gallery.card;
-//     card.append(image);
-//     image.src= object.imageUrl;
-//     card.append (figcaption);
-//     figcaption.innerText = object.title;
-//     return card;
-// }
-
-
-
-
-
-// console.log (donnnees[1]) erreur "donnees is undefined"
-// console.log(donnees.length);
-
-// function extraction (object) {
-//     for (let item in object)
-//     console.log (item.title)
-// }
-// extraction (donnees)
+ 

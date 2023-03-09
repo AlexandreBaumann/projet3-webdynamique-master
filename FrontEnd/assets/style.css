@@ -125,6 +125,39 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+#filtres {
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 30px;
+	margin-right: 20%;
+	margin-left: 20%;
+	column-gap: 10px;
+
+}
+
+#filtres input {
+	border-radius: 60px;
+	border: 2px solid #1D6154;
+	height: 37px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 100px;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: fit-content;
+	font-size: 16px;
+	color: #1D6154;
+	font-weight: 700;
+	background-color: white;
+}
+
+#filtres input:hover {
+	background-color: #1D6154;
+	color: white;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
