@@ -219,3 +219,52 @@ footer nav ul {
 	margin: 2em
 }
 
+/* ------------ Formulaire --------------------- */
+
+form {
+	display: flex;
+	flex-direction: column;
+	width: 45%;
+	max-width: 400px;
+	justify-content: center;
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+form h2 {
+	margin: 30px;
+}
+
+form .champ {
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	margin-bottom: 30px;
+	row-gap: 8px; /* préférer line-height ? */
+	color: #3D3D3D;
+}
+
+form input {
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: none;
+	padding: 10px;
+}
+
+form button {
+	width: 30%;
+	margin-left: auto;
+    margin-right: auto;
+	height: 35px;
+	border-radius: 60px;
+	background-color: #1D6154;
+	font-weight: 700;
+	color:white;
+	margin-bottom: 20px;
+	font-family: Syne;
+}
+
+form a {
+	color: #3D3D3D;
+}
+
