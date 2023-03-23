@@ -9,6 +9,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="https://kit.fontawesome.com/6ea0c2bce2.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
 	<header>
@@ -27,13 +29,13 @@
 			<H2> Login </H2>
 			<div class="champ">
 				<label for="email">Email</label>
-				<input type="email" id="email" name="email" placeholder="you@example.com"  required pattern="">
+				<input type="email" id="email" name="email" placeholder="you@example.com">
 			</div>
 			<div class="champ" >
 				<label for="password" >Mot de passe</label>
 				<input type="password" id="mdp" name="password">
 			</div>
-			<button type="submit" value="Connexion" onclick="login()">Envoyer</button>
+			<button type="submit" value="Connexion" id="login">Envoyer</button>
 			<p><a href="">Mot de passe oublié</a></p>
 		</form>
 
@@ -46,6 +48,8 @@
 		</nav>
 	</footer>
 	<script src="JS/login.js"> </script>
+
+
 
 </body>
 </html>
