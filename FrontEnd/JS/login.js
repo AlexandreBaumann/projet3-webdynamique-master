@@ -12,10 +12,11 @@
 formulaire = document.getElementById("formulaire")
 email = document.getElementById("email")
 mdp = document.getElementById("mdp")
-document.getElementById("login").addEventListener("click", login);
+document.getElementById("formulaire").addEventListener("submit", login);
 
 // Créer un gestionnaire d'événement onclick
 function login() {
+  event.preventDefault()
     const username = document.getElementById("email").value;
     const password = document.getElementById("mdp").value;
     fetch("http://localhost:5678/api/users/login", {
@@ -38,7 +39,7 @@ function login() {
     .then (data => {
       const token = data.token; // Récupère le token dans la propriété "token" de l'objet "data"
       localStorage.setItem("token", token);
-      window.location.href = "http://127.0.0.1:5500/FrontEnd/index.html";
+      window.location.href = "/FrontEnd/index.html";
 
     })
     .catch(error => console.error("Erreur :", error));

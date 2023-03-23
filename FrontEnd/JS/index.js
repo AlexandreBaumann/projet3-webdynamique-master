@@ -88,13 +88,14 @@ main();
 
 */
 
-//changement dans le menu quand on est connecté
-function logoutMenu () {
+function logoutMenu() {
   document.querySelector("header ul li:nth-child(3)").innerHTML = "logout";
-  document.querySelector("header ul li:nth-child(3)").addEventListener("click", localStorage.removeItem("token"))
+  document.querySelector("header ul li:nth-child(3)").addEventListener("click", function() {
+    localStorage.removeItem("token");
+    window.location.reload();
+  });
 }
 
-//affichage de la barre supérieure quand on est connecté
 function barTop() {
   const body = document.querySelector("body");
   const topBar = document.createElement('div');
@@ -110,7 +111,10 @@ function barTop() {
   html.insertBefore(topBar, body);
 }
 
-//affichage de l'icône modifier' quand on est connecté
+
+
+
+
 function iconDisplay() {
   const portfolio = document.querySelector('#portfolio');
 
@@ -130,13 +134,13 @@ function iconDisplay() {
   // Appeler une fonction pour afficher la modale --------- OK
 }
 
-//affichage des éléments du back dans la modale
+
 function modaleItems(data) {
   data.forEach((element) => {
     document.querySelector('#galerieModale').innerHTML += `
     <figure id="modaleItem">
         <img src=${element.imageUrl}>
-        <i class="fa-solid fa-trash-can"></i>
+        <i class="fa-solid fa-trash-can" id="${element.id}"></i>
         <figcaption> Editer </figcaption>
     </figure>
     `;
@@ -155,16 +159,33 @@ async function modaleDisplay1() {
                         <button type = "button" id= "suppModale" value = "suppGalerie">Supprimer la gallerie</button>                         
                       </div>`;
   body.appendChild(modale)
+  document.getElementById("fermerModale").addEventListener("click", closeModale);
+  document.getElementById("modale").addEventListener("click", (event) => {
+    if (event.target === event.currentTarget) { //event.target = élément DOM sur lequel l'événement a été déclenché (=cliqué); event.currentTarget = l'élément sur lequel le gestionnaire d'événements a été attaché (dans ce cas, #modale)
+      closeModale();
+    }
+  });
+
   const api_url = "http://localhost:5678/api/works";
   await fetchData(api_url);
   modaleItems(data_Api)
-  // document.getElementById("fermerModale").addEventListener("click", imgSupp()); 
+  document.querySelectorAll("#modaleItem i").forEach(item => {
+    item.addEventListener("click", (event) => {
+      console.log(event.target.id) // remplacer par imgSupp(id)
+      document.getElementById(event.target.id).parentNode.remove()
+
+    });
+  });
+
+
 
   // OK récupérer le tableau généré plus tôt ou en regénérer par fetch
   // OK générer l'affichage
-  // ~ gestionnaire d'événement sur supprimer => fonction passant en paramètre l'index et l'ID (fonction splice) ; distinguer suppression du tableau et du back
+  // ~ gestionnaire d'événement sur supprimer => fonction passant en paramètre l'index et l'ID
+  // (fonction splice) ; distinguer suppression du tableau et du back
 
-}
+} 
+
 
 async function imgSupp(id) {
   await fetch(`http://localhost:5678/api/works/${id}`, {
@@ -185,8 +206,6 @@ async function imgSupp(id) {
 }
 // console.log(localStorage.getItem("token"))
 
-
-
 function logged() {
   const token = localStorage.getItem("token");
   if (token) {
@@ -196,3 +215,6 @@ function logged() {
   }
 }
 window.addEventListener('load', logged);
+function closeModale (){
+  document.querySelector('#modale').remove()
+}
