@@ -18,7 +18,6 @@ document.getElementById("login").addEventListener("click", login);
 function login() {
     const username = document.getElementById("email").value;
     const password = document.getElementById("mdp").value;
-    preventDefault()
     fetch("http://localhost:5678/api/users/login", {
       method: "POST",
       headers: {

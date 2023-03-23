@@ -88,11 +88,13 @@ main();
 
 */
 
+//changement dans le menu quand on est connecté
 function logoutMenu () {
   document.querySelector("header ul li:nth-child(3)").innerHTML = "logout";
   document.querySelector("header ul li:nth-child(3)").addEventListener("click", localStorage.removeItem("token"))
 }
 
+//affichage de la barre supérieure quand on est connecté
 function barTop() {
   const body = document.querySelector("body");
   const topBar = document.createElement('div');
@@ -108,10 +110,7 @@ function barTop() {
   html.insertBefore(topBar, body);
 }
 
-
-
-
-
+//affichage de l'icône modifier' quand on est connecté
 function iconDisplay() {
   const portfolio = document.querySelector('#portfolio');
 
@@ -131,7 +130,7 @@ function iconDisplay() {
   // Appeler une fonction pour afficher la modale --------- OK
 }
 
-
+//affichage des éléments du back dans la modale
 function modaleItems(data) {
   data.forEach((element) => {
     document.querySelector('#galerieModale').innerHTML += `
