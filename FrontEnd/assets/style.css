@@ -221,7 +221,7 @@ footer nav ul {
 
 /* ------------ Formulaire --------------------- */
 
-form {
+#formulaire {
 	display: flex;
 	flex-direction: column;
 	width: 45%;
@@ -232,11 +232,11 @@ form {
     margin-right: auto;
 }
 
-form h2 {
+#formulaire h2 {
 	margin: 30px;
 }
 
-form .champ {
+#formulaire .champ {
 	display: flex;
 	flex-direction: column;
 	text-align: left;
@@ -245,13 +245,13 @@ form .champ {
 	color: #3D3D3D;
 }
 
-form input {
+#formulaire input {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	border: none;
 	padding: 10px;
 }
 
-form button {
+#formulaire button {
 	width: 30%;
 	margin-left: auto;
     margin-right: auto;
@@ -264,7 +264,7 @@ form button {
 	font-family: Syne;
 }
 
-form a {
+#formulaire a {
 	color: #3D3D3D;
 }
 
@@ -359,29 +359,31 @@ form a {
 
 #modaleContent {
 	background-color: white;
-	display: flex;
-	flex-direction: column;
-	padding: 30px;
+	padding: 1%;
 	border-radius: 10px;
-	width: 40%;
+	width: 35%;
 	height: 80%;
-
-
-}
-
-#modaleContent h3{	
-	text-align: center;
-	font-family: 'Work Sans';
-	font-size: 26px;
+	display: flex;
 }
 
 #fermerModale {
 	background-color: white;
 	border: none;
-	display: flex;
-	justify-content: flex-end;
-	position: relative;
+	text-align: end;
 }
+
+/* ///////////////// Modale1 ///////////////////////*/
+
+#modale1 {
+	display: flex;
+	flex-direction: column;
+}
+#modaleContent h3{	
+	text-align: center;
+	font-family: 'Work Sans';
+	font-size: 20px;
+}
+
 
 #galerieModale{
 	flex:auto;
@@ -394,36 +396,9 @@ form a {
 	padding-bottom: 6%;
 	margin-left: 10%;
 	margin-right: 10%;
-	height: 60%
+	height: 55%
 }
 
-#ajoutModale {
-	background-color: #1D6154;
-	color: white;
-	border-radius: 60px;
-	text-align: center;
-	margin-left: 30%;
-	margin-right: 30%;
-	font-size: 14px;
-	font-family: 'Syne';
-	font-weight: 700;
-	line-height: 30px;
-	padding-left: 15px;
-	padding-right: 15px;
-	margin-top: 4%;
-	margin-bottom: 2%;
-}
-#suppModale {
-	background-color: white;
-	border: none;
-	color:#D65353;
-	text-align: center;
-	margin-left: 35%;
-	margin-right: 35%;
-	font-family: 'Syne';
-	font-weight: 400;
-	margin-bottom: 3%;
-}
 
 #modaleItem {
 	position: relative;
@@ -435,8 +410,7 @@ form a {
 	object-fit: cover;
 	width: 100%;
 	height: 100%;
-
-}
+ }
 #modaleItem i {
 	position: absolute;
 	top: 10px;
@@ -449,4 +423,85 @@ form a {
 	display: flex;
 	justify-content: center;
 	align-items: center;	
+}
+
+#boutonsModale1 {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+#ajoutModale1,
+#suppGallerie {
+  font-family: 'Syne', sans-serif;
+  width: 40%;
+  margin: 2% auto 1%;
+  padding: 5px 15px;
+  border-radius: 60px;
+  text-align: center;
+}
+
+#ajoutModale1 {
+	background-color: #1D6154;
+	color: white;
+	font-weight: 700;
+	border: none;
+	line-height: 200%;
+}
+  
+#suppGallerie {
+background-color: white;
+border: none;
+color: #D65353;
+font-weight: 400;
+}
+
+/* ///////////////// Modale2 ///////////////////////*/
+#modaleTop {
+	display: flex;
+	width: 95%;
+}
+#retourModale{
+	margin-right: auto;
+}
+#modale2 {
+	display: flex;
+	flex-direction: column;
+  width:100%;
+  justify-content: center;
+	align-items: center;
+}
+
+#ajoutImage { display: none;}
+
+#ajoutItem {
+  width: 60%;
+}
+
+#ajoutItem i{
+	color:#B9C5CC;
+	font-size: 60px;
+	margin-top: 15%;
+	margin-bottom: 15%;
+}
+#ajoutItem label {
+	display: flex;
+	flex-direction: column;
+	background-color:#E8F1F6;
+	height: 200px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 3px;
+}
+
+#ajoutItem button {
+	border:none;
+	background-color: #CBD6DC;
+	color:#306685;
+	border-radius: 50px;
+	padding: 10px 20px 10px 20px;
+}
+#ajoutItem p{
+	line-height: 20px;
+	font-size: 10px;
 }

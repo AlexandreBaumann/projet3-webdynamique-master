@@ -67,6 +67,7 @@ async function main() {
   const api_url = "http://localhost:5678/api/works";
   const filtres = ["Tous", "Objets", "Appartements", "Hôtels & restaurants"];
   await fetchData(api_url);
+  logged();
   displayData(data_Api);
   displayFiltres(filtres);
 }
@@ -111,10 +112,6 @@ function barTop() {
   html.insertBefore(topBar, body);
 }
 
-
-
-
-
 function iconDisplay() {
   const portfolio = document.querySelector('#portfolio');
 
@@ -130,8 +127,7 @@ function iconDisplay() {
                           `
   // document.querySelector("#filtres").style.display = 'none'; ne marche pas
   document.getElementById("divModif").addEventListener("click", modaleDisplay1);
-  // eventlistener sur l'icone-texte modifier --------- OK
-  // Appeler une fonction pour afficher la modale --------- OK
+ 
 }
 
 
@@ -152,11 +148,16 @@ async function modaleDisplay1() {
   const modale = document.createElement('aside');
   modale.id = "modale"
   modale.innerHTML = `<div id="modaleContent">
-                        <button type = "button" id= "fermerModale" value = "fermer">X</button>
-                        <h3>Galerie Photo </h3>
-                        <div id= "galerieModale"></div>
-                        <button type = "button" id= "ajoutModale" value = "ajout">Ajouter une photo</button>
-                        <button type = "button" id= "suppModale" value = "suppGalerie">Supprimer la gallerie</button>                         
+                        <div id="modale1">
+                          <button type = "button" id= "fermerModale" value = "fermer">X</button>
+                          <h3>Galerie Photo </h3>
+                          <div id= "galerieModale">
+                          </div>
+                          <div id="boutonsModale1">
+                            <button type = "button" id= "ajoutModale1" value = "ajout">Ajouter une photo</button>
+                            <button type = "button" id= "suppGallerie" value = "suppGallerie">Supprimer la gallerie</button>                         
+                          </div>
+                        </div>
                       </div>`;
   body.appendChild(modale)
   document.getElementById("fermerModale").addEventListener("click", closeModale);
@@ -164,26 +165,21 @@ async function modaleDisplay1() {
     if (event.target === event.currentTarget) { //event.target = élément DOM sur lequel l'événement a été déclenché (=cliqué); event.currentTarget = l'élément sur lequel le gestionnaire d'événements a été attaché (dans ce cas, #modale)
       closeModale();
     }
+  document.getElementById("ajoutModale1").addEventListener("click", modaleDisplay2);
   });
 
-  const api_url = "http://localhost:5678/api/works";
-  await fetchData(api_url);
+  await fetchData("http://localhost:5678/api/works");
   modaleItems(data_Api)
   document.querySelectorAll("#modaleItem i").forEach(item => {
     item.addEventListener("click", (event) => {
       console.log(event.target.id) // remplacer par imgSupp(id)
       document.getElementById(event.target.id).parentNode.remove()
-
     });
   });
 
-
-
-  // OK récupérer le tableau généré plus tôt ou en regénérer par fetch
-  // OK générer l'affichage
-  // ~ gestionnaire d'événement sur supprimer => fonction passant en paramètre l'index et l'ID
-  // (fonction splice) ; distinguer suppression du tableau et du back
-
+  function closeModale (){
+    document.querySelector('#modale').remove()
+  }
 } 
 
 
@@ -204,8 +200,8 @@ async function imgSupp(id) {
     console.error('Il y a eu un problème dans la suppression:', error);
   });
 }
-// console.log(localStorage.getItem("token"))
 
+// console.log(localStorage.getItem("token"))
 function logged() {
   const token = localStorage.getItem("token");
   if (token) {
@@ -213,8 +209,58 @@ function logged() {
     iconDisplay();
     logoutMenu() ;
   }
+
 }
-window.addEventListener('load', logged);
-function closeModale (){
-  document.querySelector('#modale').remove()
+// !!! appel de la fonction en début de fichier !!!
+
+// ----------- Second écran de la modale ---------------------
+function retourModale1 () {
+  document.getElementById("modale2").style.display = "none";
+  document.getElementById("modale1").style.display = "flex";
 }
+function modaleDisplay2 () {
+  document.getElementById("modale1").style.display = "none";
+  // document.getElementById("modale1").remove()
+  const modale2 = document.createElement('div');
+  modale2.setAttribute("id", "modale2");
+  modale2.innerHTML = `          
+                        <div id="modaleTop">
+                          <button type = "button" id= "retourModale" value = "retour"><i class="fa-solid fa-arrow-left"></i></button>
+                          <button type = "button" id= "fermerModale" value = "fermer">X</button>
+                        </div>
+                          <h3>Ajout Photo </h3>
+                        <form id= "ajoutItem">
+                          <label for="ajoutImage">
+                            <i class="fa-solid fa-image"></i>
+                            <button type = "button">+ Ajouter Photo</button>
+                            <p> jpg, png: 4mo max </p>
+                          <input type = "file" accept="image/png, image/jpeg" id="ajoutImage">
+                          </label>
+                          <div>
+                            <
+                            <input type="texte" id="titre" name="Titre">
+                          </div>
+                          <select name="Categorie" id="categorySelect">
+                            <option value="objet">Objet</option>
+                            <option value="appartement">Appartements</option>
+                            <option value="Hotel">Hôtels et restaurants</option>
+                          </select>
+                          <button type="button"  id= "validerModale" value = "valider">Valider</button>
+                        </form>       
+                      `;
+  document.getElementById("modaleContent").appendChild(modale2);
+  document.getElementById("fermerModale").addEventListener("click", closeModale);
+  document.getElementById("retourModale").addEventListener("click", retourModale1);
+
+}
+
+
+// OK Display none sur le contenu de la modale
+// ~ ajout de la fleche retour ne arriere
+// Catégorie: champ select
+// input type = "file"
+// bouton valider gris et inactif (proriété disabled) tant que tous les champs ne sont pas remplis 
+// quand on rajoute une photo, elle se met en dernier (rajouter dernier élément au cache ou recharger le tableau)
+// En créer une et tester la fonction suppression
+
+//vérifier la synchronicité des fonctions
