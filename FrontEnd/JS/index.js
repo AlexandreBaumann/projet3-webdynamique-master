@@ -176,18 +176,18 @@ function modaleDisplay () {
                             <button type = "button" id= "fermerModale2" value = "fermer">X</button>
                           </div>
                             <h3>Ajout Photo </h3>
-                          <form id= "ajoutItem">
+                          <form action="http://localhost:5678/api/works" method="post" id= "ajoutItem">
                             <label for="ajoutImage" id="modale2fichier">
                                 <i class="fa-solid fa-image"></i>
                                 <button type = "button">+ Ajouter Photo</button>
                                 <p> jpg, png: 4mo max </p>
                               <input type = "file" accept="image/png, image/jpeg" id="ajoutImage">
                               <div id="image-preview" style="display: none;">
-                                <img id="preview-img" src="" alt="Image miniature" style="max-width: 200px; max-height: 200px;"/>
+                                <img id="preview-img" src="" alt="Image miniature"/>
                               </div>
                             </label>
                             <div class="modale2champs">
-                              <label for="titre">Email</label>
+                              <label for="titre">Titre</label>
                               <input type="texte" id="titre" name="Titre">
                             </div>
                             <div class="modale2champs">
@@ -252,23 +252,17 @@ var modale1DisplayStyle = window.getComputedStyle(modale1).display;
 var modale2 = document.getElementById('modale2');
 var modale2DisplayStyle = window.getComputedStyle(modale2).display;
 
-  if (modaleDisplayStyle !== 'none') {
     document.getElementById("modale").addEventListener("click", (event) => {
       if (event.target === event.currentTarget) { //event.target = élément DOM sur lequel l'événement a été déclenché (=cliqué); event.currentTarget = l'élément sur lequel le gestionnaire d'événements a été attaché (dans ce cas, #modale)
         closeModale();
       }
     });
-  }
-
-  if (modale1DisplayStyle !== 'none') {
     document.getElementById("fermerModale1").addEventListener("click", closeModale);
     document.getElementById("ajoutModale1").addEventListener("click", modaleDisplay2);
-  }
-  if (modale2DisplayStyle !== 'none') {
     document.getElementById("fermerModale2").addEventListener("click", closeModale);
     document.getElementById("retourModale").addEventListener("click", retourModale1);
+    ajoutImage ()
   }
-}
 
 // ------------------- Evenements -----------------------------
 
@@ -280,16 +274,28 @@ function retourModale1() {
   document.getElementById("modale1").style.display = "flex";
 }
 
-
-// ----------- Second écran de la modale ---------------------
-
-
 function modaleDisplay2 () {
   document.getElementById("modale1").style.display = "none";
   document.getElementById("modale2").style.display = "flex"
-  // document.getElementById("modale1").remove()
 }
 
+function ajoutImage () {
+  const ajoutImage = document.getElementById('ajoutImage');
+  const preview = document.getElementById('preview-img');
+
+  ajoutImage.addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+          preview.src = e.target.result;
+          document.getElementById('image-preview').style.display = 'flex';
+      };
+      reader.readAsDataURL(file);
+      const notLastChildren = document.querySelectorAll('#modale2fichier > *:not(:last-child)');
+        notLastChildren.forEach(child => { child.style.display = 'none';  });
+  });
+}
 
 
   // ajoutImage.addEventListener('change', function (event) {

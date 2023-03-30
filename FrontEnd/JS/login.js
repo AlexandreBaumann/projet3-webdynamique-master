@@ -40,7 +40,6 @@ function login() {
       const token = data.token; // Récupère le token dans la propriété "token" de l'objet "data"
       localStorage.setItem("token", token);
       window.location.href = "/FrontEnd/index.html";
-
     })
     .catch(error => console.error("Erreur :", error));
   }
