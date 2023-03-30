@@ -126,16 +126,22 @@ function iconDisplay() {
                           </div>
                           `
   // document.querySelector("#filtres").style.display = 'none'; ne marche pas
-  document.getElementById("divModif").addEventListener("click", modaleDisplay1);
+  document.getElementById("divModif").addEventListener("click", modaleDisplay);
 }
 
 /* ---------------------------- Modale ---------------------------*/
 /* ---------------------------- Modale ---------------------------*/
 /* ---------------------------- Modale ---------------------------*/
+function logged() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    barTop();
+    iconDisplay();
+    logoutMenu() ;
+  }
+} // !!! appel de la fonction en début de fichier !!!
+// test de token : console.log(localStorage.getItem("token"))
 
-function closeModale (){
-  document.querySelector('#modale').remove()
-}
 
 function modaleItems(data) {
   data.forEach((element) => {
@@ -150,18 +156,12 @@ function modaleItems(data) {
 }
 
 function modaleDisplay () {
-  
-}
-
-
-
-async function modaleDisplay1() {
   const body = document.querySelector('body');
   const modale = document.createElement('aside');
   modale.id = "modale"
   modale.innerHTML = `<div id="modaleContent">
                         <div id="modale1">
-                          <button type = "button" id= "fermerModale" value = "fermer">X</button>
+                          <button type = "button" id= "fermerModale1" value = "fermer">X</button>
                           <h3>Galerie Photo </h3>
                           <div id= "galerieModale">
                           </div>
@@ -170,15 +170,48 @@ async function modaleDisplay1() {
                             <button type = "button" id= "suppGallerie" value = "suppGallerie">Supprimer la gallerie</button>                         
                           </div>
                         </div>
-                      </div>`;
-  body.appendChild(modale)
-  document.getElementById("fermerModale").addEventListener("click", closeModale);
-  document.getElementById("modale").addEventListener("click", (event) => {
-    if (event.target === event.currentTarget) { //event.target = élément DOM sur lequel l'événement a été déclenché (=cliqué); event.currentTarget = l'élément sur lequel le gestionnaire d'événements a été attaché (dans ce cas, #modale)
-      closeModale();
-    }
-  document.getElementById("ajoutModale1").addEventListener("click", modaleDisplay2);
-  });
+                        <div id="modale2" style="display: none;">
+                          <div id="modaleTop">
+                            <button type = "button" id= "retourModale" value = "retour"><i class="fa-solid fa-arrow-left"></i></button>
+                            <button type = "button" id= "fermerModale2" value = "fermer">X</button>
+                          </div>
+                            <h3>Ajout Photo </h3>
+                          <form id= "ajoutItem">
+                            <label for="ajoutImage" id="modale2fichier">
+                                <i class="fa-solid fa-image"></i>
+                                <button type = "button">+ Ajouter Photo</button>
+                                <p> jpg, png: 4mo max </p>
+                              <input type = "file" accept="image/png, image/jpeg" id="ajoutImage">
+                              <div id="image-preview" style="display: none;">
+                                <img id="preview-img" src="" alt="Image miniature" style="max-width: 200px; max-height: 200px;"/>
+                              </div>
+                            </label>
+                            <div class="modale2champs">
+                              <label for="titre">Email</label>
+                              <input type="texte" id="titre" name="Titre">
+                            </div>
+                            <div class="modale2champs">
+                              <label for="categorySelect">Catégorie</label>
+                              <select name="Categorie" id="categorySelect">
+                                <option value="objet">Objet</option>
+                                <option value="appartement">Appartements</option>
+                                <option value="Hotel">Hôtels et restaurants</option>
+                              </select>
+                            </div>
+                            <div id="separation"></div>
+                            <button type="button"  id= "validerModale2" value = "valider">Valider</button>
+                          </form>
+                        </div>
+                      </div>
+                      `;
+    body.appendChild(modale);
+    modaleGalerie ();
+    eventModale ();
+}
+
+// ------------------- Gallerie -----------------------------
+
+async function modaleGalerie() {
 
   await fetchData("http://localhost:5678/api/works");
   modaleItems(data_Api)
@@ -189,9 +222,7 @@ async function modaleDisplay1() {
     });
   });
 
-
 } 
-
 
 async function imgSupp(id) {
   await fetch(`http://localhost:5678/api/works/${id}`, {
@@ -211,88 +242,76 @@ async function imgSupp(id) {
   });
 }
 
-// console.log(localStorage.getItem("token"))
-function logged() {
-  const token = localStorage.getItem("token");
-  if (token) {
-    barTop();
-    iconDisplay();
-    logoutMenu() ;
+// ------------------- Gestion d'évenements -----------------------------
+
+function eventModale () {
+var modale = document.getElementById('modale');
+var modaleDisplayStyle = window.getComputedStyle(modale).display;
+var modale1 = document.getElementById('modale1');
+var modale1DisplayStyle = window.getComputedStyle(modale1).display;
+var modale2 = document.getElementById('modale2');
+var modale2DisplayStyle = window.getComputedStyle(modale2).display;
+
+  if (modaleDisplayStyle !== 'none') {
+    document.getElementById("modale").addEventListener("click", (event) => {
+      if (event.target === event.currentTarget) { //event.target = élément DOM sur lequel l'événement a été déclenché (=cliqué); event.currentTarget = l'élément sur lequel le gestionnaire d'événements a été attaché (dans ce cas, #modale)
+        closeModale();
+      }
+    });
   }
 
+  if (modale1DisplayStyle !== 'none') {
+    document.getElementById("fermerModale1").addEventListener("click", closeModale);
+    document.getElementById("ajoutModale1").addEventListener("click", modaleDisplay2);
+  }
+  if (modale2DisplayStyle !== 'none') {
+    document.getElementById("fermerModale2").addEventListener("click", closeModale);
+    document.getElementById("retourModale").addEventListener("click", retourModale1);
+  }
 }
-// !!! appel de la fonction en début de fichier !!!
 
-// ----------- Second écran de la modale ---------------------
+// ------------------- Evenements -----------------------------
+
+function closeModale (){
+  document.querySelector('#modale').remove()
+}
 function retourModale1() {
   document.getElementById("modale2").style.display = "none";
   document.getElementById("modale1").style.display = "flex";
 }
 
+
+// ----------- Second écran de la modale ---------------------
+
+
 function modaleDisplay2 () {
   document.getElementById("modale1").style.display = "none";
+  document.getElementById("modale2").style.display = "flex"
   // document.getElementById("modale1").remove()
-  const modale2 = document.createElement('div');
-  modale2.setAttribute("id", "modale2");
-  modale2.innerHTML = `          
-                        <div id="modaleTop">
-                          <button type = "button" id= "retourModale" value = "retour"><i class="fa-solid fa-arrow-left"></i></button>
-                          <button type = "button" id= "fermerModale" value = "fermer">X</button>
-                        </div>
-                          <h3>Ajout Photo </h3>
-                        <form id= "ajoutItem">
-                          <label for="ajoutImage" id="modale2fichier">
-                              <i class="fa-solid fa-image"></i>
-                              <button type = "button">+ Ajouter Photo</button>
-                              <p> jpg, png: 4mo max </p>
-                            <input type = "file" accept="image/png, image/jpeg" id="ajoutImage">
-                            <div id="image-preview" style="display: none;">
-                              <img id="preview-img" src="" alt="Image miniature" style="max-width: 200px; max-height: 200px;"/>
-                            </div>
-                          </label>
-                          <div class="modale2champs">
-                            <label for="titre">Email</label>
-                            <input type="texte" id="titre" name="Titre">
-                          </div>
-                          <div class="modale2champs">
-                            <label for="categorySelect">Catégorie</label>
-                            <select name="Categorie" id="categorySelect">
-                              <option value="objet">Objet</option>
-                              <option value="appartement">Appartements</option>
-                              <option value="Hotel">Hôtels et restaurants</option>
-                            </select>
-                          </div>
-                          <div id="separation"></div>
-                          <button type="button"  id= "validerModale2" value = "valider">Valider</button>
-                        </form>       
-                      `;
-  document.getElementById("modaleContent").appendChild(modale2);
-  document.getElementById("fermerModale").addEventListener("click", closeModale);
-  document.getElementById("retourModale").addEventListener("click", retourModale1);
 }
 
 
 
-  ajoutImage.addEventListener('change', function (event) {
-    var input = event.target;
-    if (input.files && input.files[0]) {
-      var file = input.files[0];
-      var acceptedTypes = ['image/png', 'image/jpeg'];
-      if (!acceptedTypes.includes(file.type)) {
-        alert('Veuillez sélectionner une image au format jpg ou png.');
-      } else {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          var previewImg = document.getElementById('preview-img');
-          previewImg.src = e.target.result;
+  // ajoutImage.addEventListener('change', function (event) {
+  //   var input = event.target;
+  //   if (input.files && input.files[0]) {
+  //     var file = input.files[0];
+  //     var acceptedTypes = ['image/png', 'image/jpeg'];
+  //     if (!acceptedTypes.includes(file.type)) {
+  //       alert('Veuillez sélectionner une image au format jpg ou png.');
+  //     } else {
+  //       var reader = new FileReader();
+  //       reader.onload = function (e) {
+  //         var previewImg = document.getElementById('preview-img');
+  //         previewImg.src = e.target.result;
           
-          var imagePreview = document.getElementById('image-preview');
-          imagePreview.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-  });
+  //         var imagePreview = document.getElementById('image-preview');
+  //         imagePreview.style.display = 'block';
+  //       };
+  //       reader.readAsDataURL(file);
+  //     }
+  //   }
+  // });
 ;
 
 // OK Display none sur le contenu de la modale

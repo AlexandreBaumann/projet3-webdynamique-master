@@ -366,7 +366,7 @@ footer nav ul {
 	display: flex;
 }
 
-#fermerModale {
+#fermerModale1, #fermerModale2 {
 	background-color: white;
 	border: none;
 	text-align: end;
