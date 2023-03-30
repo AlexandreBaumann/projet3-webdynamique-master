@@ -127,6 +127,22 @@ function iconDisplay() {
                           `
   // document.querySelector("#filtres").style.display = 'none'; ne marche pas
   document.getElementById("divModif").addEventListener("click", modaleDisplay);
+  const introduction = document.querySelector('#introduction');
+  introduction.innerHTML = 
+                          `<section id="introduction">
+                            <figure>
+                              <img src="./assets/images/sophie-bluel.png" alt="">
+                              <figcaption> <i class="fa-regular fa-pen-to-square" ></i><p> Modifier </p> </figcaption>
+                            </figure>
+                            <article>
+                              <div> <i class="fa-regular fa-pen-to-square" ></i><p> Modifier </p> </div>
+                              <h2>Designer d'espace</h2>
+                              <p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
+                              <p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+                              <p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
+                            </article>
+                          </section>`
+
 }
 
 /* ---------------------------- Modale ---------------------------*/
@@ -294,36 +310,48 @@ function ajoutImage () {
       reader.readAsDataURL(file);
       const notLastChildren = document.querySelectorAll('#modale2fichier > *:not(:last-child)');
         notLastChildren.forEach(child => { child.style.display = 'none';  });
+        envoiImage();
   });
 }
 
+function envoiImage() {
+  event.preventDefault()
+    const Titre = document.getElementById("titre").value;
+    const categorie = document.getElementById("mdp").value;
+    const newImage = document.getElementById("modale2fichier").value;
+    fetch("http://localhost:5678/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "id": 0,
+        "title": "Titre",
+        "imageUrl": "newImage",
+        "categoryId": "categorie",
+        "userId": 1
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        alert("Nom d'utilisateur ou mot de passe incorrect.");
+      }
+    })
+    .then (data => {
+      const token = data.token; // Récupère le token dans la propriété "token" de l'objet "data"
+      localStorage.setItem("token", token);
+      window.location.href = "/FrontEnd/index.html";
+    })
+    .catch(error => console.error("Erreur :", error));
+  }
 
-  // ajoutImage.addEventListener('change', function (event) {
-  //   var input = event.target;
-  //   if (input.files && input.files[0]) {
-  //     var file = input.files[0];
-  //     var acceptedTypes = ['image/png', 'image/jpeg'];
-  //     if (!acceptedTypes.includes(file.type)) {
-  //       alert('Veuillez sélectionner une image au format jpg ou png.');
-  //     } else {
-  //       var reader = new FileReader();
-  //       reader.onload = function (e) {
-  //         var previewImg = document.getElementById('preview-img');
-  //         previewImg.src = e.target.result;
-          
-  //         var imagePreview = document.getElementById('image-preview');
-  //         imagePreview.style.display = 'block';
-  //       };
-  //       reader.readAsDataURL(file);
-  //     }
-  //   }
-  // });
-;
 
 // OK Display none sur le contenu de la modale
-// ~ ajout de la fleche retour ne arriere
-// Catégorie: champ select
-// input type = "file"
+// OK ajout de la fleche retour ne arriere
+// OK Catégorie: champ select
+// OK input type = "file"
 
 // bouton valider gris et inactif (proriété disabled) tant que tous les champs ne sont pas remplis 
 // quand on rajoute une photo, elle se met en dernier (rajouter dernier élément au cache ou recharger le tableau)
