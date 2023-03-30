@@ -127,9 +127,15 @@ function iconDisplay() {
                           `
   // document.querySelector("#filtres").style.display = 'none'; ne marche pas
   document.getElementById("divModif").addEventListener("click", modaleDisplay1);
- 
 }
 
+/* ---------------------------- Modale ---------------------------*/
+/* ---------------------------- Modale ---------------------------*/
+/* ---------------------------- Modale ---------------------------*/
+
+function closeModale (){
+  document.querySelector('#modale').remove()
+}
 
 function modaleItems(data) {
   data.forEach((element) => {
@@ -142,6 +148,12 @@ function modaleItems(data) {
     `;
   });
 }
+
+function modaleDisplay () {
+  
+}
+
+
 
 async function modaleDisplay1() {
   const body = document.querySelector('body');
@@ -177,9 +189,7 @@ async function modaleDisplay1() {
     });
   });
 
-  function closeModale (){
-    document.querySelector('#modale').remove()
-  }
+
 } 
 
 
@@ -214,10 +224,11 @@ function logged() {
 // !!! appel de la fonction en début de fichier !!!
 
 // ----------- Second écran de la modale ---------------------
-function retourModale1 () {
+function retourModale1() {
   document.getElementById("modale2").style.display = "none";
   document.getElementById("modale1").style.display = "flex";
 }
+
 function modaleDisplay2 () {
   document.getElementById("modale1").style.display = "none";
   // document.getElementById("modale1").remove()
@@ -230,35 +241,65 @@ function modaleDisplay2 () {
                         </div>
                           <h3>Ajout Photo </h3>
                         <form id= "ajoutItem">
-                          <label for="ajoutImage">
-                            <i class="fa-solid fa-image"></i>
-                            <button type = "button">+ Ajouter Photo</button>
-                            <p> jpg, png: 4mo max </p>
-                          <input type = "file" accept="image/png, image/jpeg" id="ajoutImage">
+                          <label for="ajoutImage" id="modale2fichier">
+                              <i class="fa-solid fa-image"></i>
+                              <button type = "button">+ Ajouter Photo</button>
+                              <p> jpg, png: 4mo max </p>
+                            <input type = "file" accept="image/png, image/jpeg" id="ajoutImage">
+                            <div id="image-preview" style="display: none;">
+                              <img id="preview-img" src="" alt="Image miniature" style="max-width: 200px; max-height: 200px;"/>
+                            </div>
                           </label>
-                          <div>
-                            <
+                          <div class="modale2champs">
+                            <label for="titre">Email</label>
                             <input type="texte" id="titre" name="Titre">
                           </div>
-                          <select name="Categorie" id="categorySelect">
-                            <option value="objet">Objet</option>
-                            <option value="appartement">Appartements</option>
-                            <option value="Hotel">Hôtels et restaurants</option>
-                          </select>
-                          <button type="button"  id= "validerModale" value = "valider">Valider</button>
+                          <div class="modale2champs">
+                            <label for="categorySelect">Catégorie</label>
+                            <select name="Categorie" id="categorySelect">
+                              <option value="objet">Objet</option>
+                              <option value="appartement">Appartements</option>
+                              <option value="Hotel">Hôtels et restaurants</option>
+                            </select>
+                          </div>
+                          <div id="separation"></div>
+                          <button type="button"  id= "validerModale2" value = "valider">Valider</button>
                         </form>       
                       `;
   document.getElementById("modaleContent").appendChild(modale2);
   document.getElementById("fermerModale").addEventListener("click", closeModale);
   document.getElementById("retourModale").addEventListener("click", retourModale1);
-
 }
 
+
+
+  ajoutImage.addEventListener('change', function (event) {
+    var input = event.target;
+    if (input.files && input.files[0]) {
+      var file = input.files[0];
+      var acceptedTypes = ['image/png', 'image/jpeg'];
+      if (!acceptedTypes.includes(file.type)) {
+        alert('Veuillez sélectionner une image au format jpg ou png.');
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var previewImg = document.getElementById('preview-img');
+          previewImg.src = e.target.result;
+          
+          var imagePreview = document.getElementById('image-preview');
+          imagePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  });
+;
 
 // OK Display none sur le contenu de la modale
 // ~ ajout de la fleche retour ne arriere
 // Catégorie: champ select
 // input type = "file"
+
 // bouton valider gris et inactif (proriété disabled) tant que tous les champs ne sont pas remplis 
 // quand on rajoute une photo, elle se met en dernier (rajouter dernier élément au cache ou recharger le tableau)
 // En créer une et tester la fonction suppression
