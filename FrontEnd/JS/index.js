@@ -192,7 +192,7 @@ function modaleDisplay () {
                             <button type = "button" id= "fermerModale2" value = "fermer">X</button>
                           </div>
                             <h3>Ajout Photo </h3>
-                          <form action="http://localhost:5678/api/works" method="post" id= "ajoutItem">
+                          <form action="http://localhost:5678/api/works" enctype="multipart/form-data" method="post" id= "ajoutItem">
                             <label for="ajoutImage" id="modale2fichier">
                                 <i class="fa-solid fa-image"></i>
                                 <button type = "button">+ Ajouter Photo</button>
@@ -209,13 +209,13 @@ function modaleDisplay () {
                             <div class="modale2champs">
                               <label for="categorySelect">Catégorie</label>
                               <select name="Categorie" id="categorySelect">
-                                <option value="objet">Objet</option>
-                                <option value="appartement">Appartements</option>
-                                <option value="Hotel">Hôtels et restaurants</option>
+                                <option value="1">Objet</option>
+                                <option value="2">Appartements</option>
+                                <option value="3">Hôtels et restaurants</option>
                               </select>
                             </div>
                             <div id="separation"></div>
-                            <button type="button"  id= "validerModale2" value = "valider">Valider</button>
+                            <button type="submit" disabled="true" id= "validerModale2" value = "valider">Valider</button>
                           </form>
                         </div>
                       </div>
@@ -277,6 +277,10 @@ var modale2DisplayStyle = window.getComputedStyle(modale2).display;
     document.getElementById("ajoutModale1").addEventListener("click", modaleDisplay2);
     document.getElementById("fermerModale2").addEventListener("click", closeModale);
     document.getElementById("retourModale").addEventListener("click", retourModale1);
+
+    document.getElementById('ajoutImage').addEventListener('change', validateForm);
+    document.getElementById('titre').addEventListener('input', validateForm);
+    document.getElementById('categorySelect').addEventListener('change', validateForm);
     ajoutImage ()
   }
 
@@ -298,6 +302,7 @@ function modaleDisplay2 () {
 function ajoutImage () {
   const ajoutImage = document.getElementById('ajoutImage');
   const preview = document.getElementById('preview-img');
+  const valider = document.getElementById('validerModale2')
 
   ajoutImage.addEventListener('change', function (event) {
       const file = event.target.files[0];
@@ -310,51 +315,60 @@ function ajoutImage () {
       reader.readAsDataURL(file);
       const notLastChildren = document.querySelectorAll('#modale2fichier > *:not(:last-child)');
         notLastChildren.forEach(child => { child.style.display = 'none';  });
-        envoiImage();
+      ;
   });
+  valider.addEventListener('submit',envoiImage)
 }
 
-function envoiImage() {
+async function envoiImage() {
   event.preventDefault()
-    const Titre = document.getElementById("titre").value;
-    const categorie = document.getElementById("mdp").value;
-    const newImage = document.getElementById("modale2fichier").value;
-    fetch("http://localhost:5678/api/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        "id": 0,
-        "title": "Titre",
-        "imageUrl": "newImage",
-        "categoryId": "categorie",
-        "userId": 1
-      })
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        alert("Nom d'utilisateur ou mot de passe incorrect.");
-      }
-    })
-    .then (data => {
-      const token = data.token; // Récupère le token dans la propriété "token" de l'objet "data"
-      localStorage.setItem("token", token);
-      window.location.href = "/FrontEnd/index.html";
-    })
-    .catch(error => console.error("Erreur :", error));
-  }
+  const titre = document.getElementById("titre").value;
+  const categorie = document.getElementById("categorySelect").value;
+  const newImage = document.getElementById("modale2fichier").files[0];
 
+  await fetchData("http://localhost:5678/api/works/");
+  const highestId = Math.max(...data_Api.map((work) => work.id));
+  const newId = highestId + 1;
+
+  const formData = new FormData();
+  formData.append('id', newId);
+  formData.append('title', titre);
+  formData.append('imageUrl', newImage);
+  formData.append('categoryId', categorie);
+  formData.append('userId', 1);
+
+  fetch("http://localhost:5678/api/works/", {
+    method: "POST",
+    body: formData
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      alert("Incorrect.");
+    }
+  })
+  .catch(error => console.error("Erreur :", error));
+}
+
+
+function validateForm() {
+  var ajoutImage = document.getElementById('ajoutImage').files.length > 0;
+  var titre = document.getElementById('titre').value.trim() !== '';
+  var categorySelect = document.getElementById('categorySelect').value !== '';
+
+  if (ajoutImage && titre && categorySelect) {
+    document.getElementById('validerModale2').disabled = false;
+  }
+}
 
 // OK Display none sur le contenu de la modale
 // OK ajout de la fleche retour ne arriere
 // OK Catégorie: champ select
 // OK input type = "file"
 
-// bouton valider gris et inactif (proriété disabled) tant que tous les champs ne sont pas remplis 
+// OK bouton valider gris et inactif (proriété disabled) tant que tous les champs ne sont pas remplis 
 // quand on rajoute une photo, elle se met en dernier (rajouter dernier élément au cache ou recharger le tableau)
 // En créer une et tester la fonction suppression
 
-//vérifier la synchronicité des fonctions
+//OK vérifier la synchronicité des fonctions

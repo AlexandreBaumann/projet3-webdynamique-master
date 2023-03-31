@@ -536,13 +536,28 @@ font-weight: 400;
 	border-radius: 3px;
 }
 
-#ajoutItem button {
+#modale2fichier button {
 	border:none;
 	background-color: #CBD6DC;
 	color:#306685;
 	border-radius: 50px;
 	padding: 10px 20px 10px 20px;
 }
+
+#validerModale2 {
+	border:none;
+	background-color: #1D6154;
+	font-weight: 700;
+	color:white;
+	border-radius: 50px;
+	padding: 10px 20px 10px 20px;
+}
+
+#validerModale2:disabled {
+	background-color: #A7A7A7;
+}
+
+
 #ajoutItem p{
 	line-height: 20px;
 	font-size: 10px;
