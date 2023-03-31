@@ -155,7 +155,7 @@ function logged() {
     iconDisplay();
     logoutMenu() ;
   }
-} // !!! appel de la fonction en début de fichier !!!
+} //  ! appel de la fonction en début de fichier
 // test de token : console.log(localStorage.getItem("token"))
 
 
@@ -192,7 +192,7 @@ function modaleDisplay () {
                             <button type = "button" id= "fermerModale2" value = "fermer">X</button>
                           </div>
                             <h3>Ajout Photo </h3>
-                          <form action="http://localhost:5678/api/works" enctype="multipart/form-data" method="post" id= "ajoutItem">
+                          <form action="http://localhost:5678/api/works/" enctype="multipart/form-data" method="post" id= "ajoutItem">
                             <label for="ajoutImage" id="modale2fichier">
                                 <i class="fa-solid fa-image"></i>
                                 <button type = "button">+ Ajouter Photo</button>
@@ -209,6 +209,7 @@ function modaleDisplay () {
                             <div class="modale2champs">
                               <label for="categorySelect">Catégorie</label>
                               <select name="Categorie" id="categorySelect">
+                                <option value=""> -- Choisissez la catégorie -- </option>
                                 <option value="1">Objet</option>
                                 <option value="2">Appartements</option>
                                 <option value="3">Hôtels et restaurants</option>
@@ -225,6 +226,10 @@ function modaleDisplay () {
     eventModale ();
 }
 
+// ------------------- Gallerie -----------------------------
+// ------------------- Gallerie -----------------------------
+// ------------------- Gallerie -----------------------------
+// ------------------- Gallerie -----------------------------
 // ------------------- Gallerie -----------------------------
 
 async function modaleGalerie() {
@@ -259,6 +264,10 @@ async function imgSupp(id) {
 }
 
 // ------------------- Gestion d'évenements -----------------------------
+// ------------------- Gestion d'évenements -----------------------------
+// ------------------- Gestion d'évenements -----------------------------
+// ------------------- Gestion d'évenements -----------------------------
+// ------------------- Gestion d'évenements -----------------------------
 
 function eventModale () {
 var modale = document.getElementById('modale');
@@ -284,6 +293,9 @@ var modale2DisplayStyle = window.getComputedStyle(modale2).display;
     ajoutImage ()
   }
 
+// ------------------- Evenements -----------------------------
+// ------------------- Evenements -----------------------------
+// ------------------- Evenements -----------------------------
 // ------------------- Evenements -----------------------------
 
 function closeModale (){
@@ -339,7 +351,11 @@ async function envoiImage() {
 
   fetch("http://localhost:5678/api/works/", {
     method: "POST",
-    body: formData
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    body: formData,
+
   })
   .then(response => {
     if (response.ok) {
