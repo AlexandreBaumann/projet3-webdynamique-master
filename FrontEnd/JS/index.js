@@ -7,12 +7,16 @@ var data_Api;
 var filteredData;
 
 // Fonction de récupération des données de l'API
+// Fonction de récupération des données de l'API
+// Fonction de récupération des données de l'API
 
 async function fetchData(url) {
   const response = await fetch(url);
   data_Api = await response.json();
 }
 
+// Affichage des données (filtrées ou non)
+// Affichage des données (filtrées ou non)
 // Affichage des données (filtrées ou non)
 
 function displayData(data) {
@@ -29,6 +33,9 @@ function displayData(data) {
 }
 
 
+// Affichage des filtres
+// Affichage des filtres
+// Affichage des filtres
 // Affichage des filtres
 
 function displayFiltres(filtres) {
@@ -49,6 +56,9 @@ function displayFiltres(filtres) {
       filterData(parseInt(bouton.id))
     ));
 }
+// Filtrage des données récupérées par l'API
+// Filtrage des données récupérées par l'API
+// Filtrage des données récupérées par l'API
 // Filtrage des données récupérées par l'API
 
 function filterData(ID) {
@@ -216,7 +226,7 @@ function modaleDisplay () {
                               </select>
                             </div>
                             <div id="separation"></div>
-                            <button type="submit" disabled="true" id= "validerModale2" value = "valider">Valider</button>
+                            <button type="button" disabled="true" id= "validerModale2" value = "valider">Valider</button>
                           </form>
                         </div>
                       </div>
@@ -329,31 +339,34 @@ function ajoutImage () {
         notLastChildren.forEach(child => { child.style.display = 'none';  });
       ;
   });
-  valider.addEventListener('submit',envoiImage)
+  valider.addEventListener('click', function (event) {
+    event.preventDefault();
+    envoiImage();});
 }
 
 async function envoiImage() {
-  event.preventDefault()
+  const tokenData = localStorage.getItem("token");
   const titre = document.getElementById("titre").value;
   const categorie = document.getElementById("categorySelect").value;
-  const newImage = document.getElementById("modale2fichier").files[0];
+  const newImage = document.getElementById("ajoutImage");
 
-  await fetchData("http://localhost:5678/api/works/");
-  const highestId = Math.max(...data_Api.map((work) => work.id));
-  const newId = highestId + 1;
+  // const highestId = Math.max(...data_Api.map((work) => work.id));
+  // const newId = highestId + 1;
+
 
   const formData = new FormData();
-  formData.append('id', newId);
   formData.append('title', titre);
-  formData.append('imageUrl', newImage);
-  formData.append('categoryId', categorie);
-  formData.append('userId', 1);
+  formData.append('categoryId', parseInt(categorie, 10));
+  formData.append('image', newImage.files[0])
+  
+  const header = {
+    // "Content-Type": "multipart/form-data",
+    Authorization: "Bearer "+ tokenData
+  }
 
   fetch("http://localhost:5678/api/works/", {
     method: "POST",
-    headers: {
-      "Content-Type": "multipart/form-data"
-    },
+    headers: header,
     body: formData,
 
   })
@@ -368,6 +381,46 @@ async function envoiImage() {
 }
 
 
+// async function envoiImage() {
+//   event.preventDefault()
+//   const titre = document.getElementById("titre").value;
+//   const categorie = document.getElementById("categorySelect").value;
+//   const newImage = document.getElementById("modale2fichier").files[0];
+
+//   await fetchData("http://localhost:5678/api/works/");
+//   const highestId = Math.max(...data_Api.map((work) => work.id));
+//   const newId = highestId + 1;
+
+//   const formData = new FormData();
+//   formData.append('id', newId);
+//   formData.append('title', titre);
+//   formData.append('imageUrl', newImage);
+//   formData.append('categoryId', categorie);
+//   formData.append('userId', 1);
+//   // console.log(localStorage.getItem("token"))
+//   // console.log("token")
+
+//   fetch("http://localhost:5678/api/works/", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "multipart/form-data",
+//       Authorization: "Bearer " + token,
+//       //     Authorization: "Bearer" + tokenData.access_token
+//     },
+//     body: formData,
+
+//   })
+//   .then(response => {
+//     if (response.ok) {
+//       return response.json();
+//     } else {
+//       alert("Incorrect.");
+//     }
+//   })
+//   .catch(error => console.error("Erreur :", error));
+// }
+
+
 function validateForm() {
   var ajoutImage = document.getElementById('ajoutImage').files.length > 0;
   var titre = document.getElementById('titre').value.trim() !== '';
@@ -377,14 +430,15 @@ function validateForm() {
     document.getElementById('validerModale2').disabled = false;
   }
 }
+ 
 
-// OK Display none sur le contenu de la modale
-// OK ajout de la fleche retour ne arriere
-// OK Catégorie: champ select
-// OK input type = "file"
+// ajouter le token d'autorisation
 
-// OK bouton valider gris et inactif (proriété disabled) tant que tous les champs ne sont pas remplis 
+//  Si marche pas : convertir l'image en blob => ajouter application json
+
+// ajouter un message d'erreur à la place de l'alerte sur l'erreur de login ; 
+
+
 // quand on rajoute une photo, elle se met en dernier (rajouter dernier élément au cache ou recharger le tableau)
 // En créer une et tester la fonction suppression
-
-//OK vérifier la synchronicité des fonctions
+ 

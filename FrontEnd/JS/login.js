@@ -33,7 +33,7 @@ function login() {
       if (response.ok) {
         return response.json();
       } else {
-        alert("Nom d'utilisateur ou mot de passe incorrect.");
+        // alert("Nom d'utilisateur ou mot de passe incorrect."); Injecter du html
       }
     })
     .then (data => {
