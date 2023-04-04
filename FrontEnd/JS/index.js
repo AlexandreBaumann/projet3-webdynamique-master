@@ -347,7 +347,7 @@ function ajoutImage () {
       ;
   });
   valider.addEventListener('click', function (event) {
-    event.stopPropagation(); // ne stoppe rien :s
+    event.stopImmediatePropagation(); // ne stoppe rien :s
     event.preventDefault();
     envoiImage();});
 }
@@ -357,10 +357,6 @@ async function envoiImage() {
   const titre = document.getElementById("titre").value;
   const categorie = document.getElementById("categorySelect").value;
   const newImage = document.getElementById("ajoutImage");
-
-  // const highestId = Math.max(...data_Api.map((work) => work.id));
-  // const newId = highestId + 1;
-
 
   const formData = new FormData();
   formData.append('title', titre);
@@ -387,47 +383,7 @@ async function envoiImage() {
   })
   .catch(error => console.error("Erreur :", error));
 }
-
-
-// async function envoiImage() {
-//   event.preventDefault()
-//   const titre = document.getElementById("titre").value;
-//   const categorie = document.getElementById("categorySelect").value;
-//   const newImage = document.getElementById("modale2fichier").files[0];
-
-//   await fetchData("http://localhost:5678/api/works/");
-//   const highestId = Math.max(...data_Api.map((work) => work.id));
-//   const newId = highestId + 1;
-
-//   const formData = new FormData();
-//   formData.append('id', newId);
-//   formData.append('title', titre);
-//   formData.append('imageUrl', newImage);
-//   formData.append('categoryId', categorie);
-//   formData.append('userId', 1);
-//   // console.log(localStorage.getItem("token"))
-//   // console.log("token")
-
-//   fetch("http://localhost:5678/api/works/", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "multipart/form-data",
-//       Authorization: "Bearer " + token,
-//       //     Authorization: "Bearer" + tokenData.access_token
-//     },
-//     body: formData,
-
-//   })
-//   .then(response => {
-//     if (response.ok) {
-//       return response.json();
-//     } else {
-//       alert("Incorrect.");
-//     }
-//   })
-//   .catch(error => console.error("Erreur :", error));
-// }
-
+ 
 
 function validateForm() {
   var ajoutImage = document.getElementById('ajoutImage').files.length > 0;
