@@ -247,17 +247,24 @@ async function modaleGalerie() {
   await fetchData("http://localhost:5678/api/works");
   modaleItems(data_Api)
   document.querySelectorAll("#modaleItem i").forEach(item => {
-    item.addEventListener("click", (event) => {
-      console.log(event.target.id) // remplacer par imgSupp(id)
-      document.getElementById(event.target.id).parentNode.remove()
+    item.addEventListener("click", async (event) => {
+      event.stopPropagation(); // ne stoppe rien :s
+      event.preventDefault();
+      await imgSupp(event.target.id); // Attend la fin de l'exécution de la fonction imgSupp avant de continuer
+      document.getElementById(event.target.id).parentNode.remove();
     });
   });
 
 } 
 
 async function imgSupp(id) {
-  await fetch(`http://localhost:5678/api/works/${id}`, {
-    method: 'DELETE'
+  const header = {
+    Authorization: "Bearer "+ localStorage.getItem("token")
+  }
+  await fetch(`http://localhost:5678/api/works/${id}/`, {
+    method: 'DELETE',
+    headers: header,
+
   })
   .then(response => {
     if (!response.ok) {
@@ -340,6 +347,7 @@ function ajoutImage () {
       ;
   });
   valider.addEventListener('click', function (event) {
+    event.stopPropagation(); // ne stoppe rien :s
     event.preventDefault();
     envoiImage();});
 }
@@ -356,7 +364,7 @@ async function envoiImage() {
 
   const formData = new FormData();
   formData.append('title', titre);
-  formData.append('categoryId', parseInt(categorie, 10));
+  formData.append('category', categorie);
   formData.append('image', newImage.files[0])
   
   const header = {
@@ -431,10 +439,6 @@ function validateForm() {
   }
 }
  
-
-// ajouter le token d'autorisation
-
-//  Si marche pas : convertir l'image en blob => ajouter application json
 
 // ajouter un message d'erreur à la place de l'alerte sur l'erreur de login ; 
 

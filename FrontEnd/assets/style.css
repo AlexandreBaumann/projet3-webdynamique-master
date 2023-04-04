@@ -219,7 +219,10 @@ footer nav ul {
 	margin: 2em
 }
 
-/* ------------ Formulaire --------------------- */
+/* ------------ Login --------------------- */
+/* ------------ Login --------------------- */
+/* ------------ Login --------------------- */
+/* ------------ Login --------------------- */
 
 #formulaire {
 	display: flex;
@@ -267,6 +270,11 @@ footer nav ul {
 #formulaire a {
 	color: #3D3D3D;
 }
+#error-message {
+	color: red;
+	margin-bottom: 20px;
+}
+
 
 /* ---------- topBar ------------*/
 
