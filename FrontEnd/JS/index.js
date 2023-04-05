@@ -258,10 +258,11 @@ async function modaleGalerie() {
   modaleItems(data_Api)
   document.querySelectorAll("#modaleItem i").forEach(item => {
     item.addEventListener("click", async (event) => {
-      event.stopPropagation(); // ne stoppe rien :s
       event.preventDefault();
+      // event.stopPropagation(); // ne stoppe rien :s
       await imgSupp(event.target.id); // Attend la fin de l'exécution de la fonction imgSupp avant de continuer
-      document.getElementById(event.target.id).parentNode.remove();
+      var retrait = document.getElementById(event.target.id).parentNode.remove();
+      retrait.preventDefault();
     });
   });
 
@@ -365,10 +366,10 @@ function ajoutImage () {
         notLastChildren.forEach(child => { child.style.display = 'none';  });
       ;
   });
-  valider.addEventListener('click', function (event) {
-    event.stopImmediatePropagation(); // ne stoppe rien :s
+  valider.addEventListener('click', function () {
+    var event = envoiImage();
     event.preventDefault();
-    envoiImage();});
+  });
 }
 
 async function envoiImage() {
