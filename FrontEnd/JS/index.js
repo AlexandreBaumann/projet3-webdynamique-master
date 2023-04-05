@@ -77,9 +77,9 @@ async function main() {
   const api_url = "http://localhost:5678/api/works";
   const filtres = ["Tous", "Objets", "Appartements", "Hôtels & restaurants"];
   await fetchData(api_url);
+  displayFiltres(filtres);
   logged();
   displayData(data_Api);
-  displayFiltres(filtres);
 }
 
 main();
@@ -152,8 +152,15 @@ function iconDisplay() {
                               <p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
                             </article>
                           </section>`
-
 }
+function filterSupp () {
+  const filtres = document.querySelectorAll("#filtres > *");
+  filtres.forEach((filtre) => {
+    filtre.style.display = "none";
+  });
+  const gallerieDiv = document.querySelector(".gallery")
+  gallerieDiv.style.marginTop = "60px";}
+
 
 /* ---------------------------- Modale ---------------------------*/
 /* ---------------------------- Modale ---------------------------*/
@@ -164,6 +171,7 @@ function logged() {
     barTop();
     iconDisplay();
     logoutMenu() ;
+    filterSupp ()
   }
 } //  ! appel de la fonction en début de fichier
 // test de token : console.log(localStorage.getItem("token"))
@@ -180,6 +188,8 @@ function modaleItems(data) {
     `;
   });
 }
+
+
 
 function modaleDisplay () {
   const body = document.querySelector('body');
@@ -309,7 +319,16 @@ var modale2DisplayStyle = window.getComputedStyle(modale2).display;
     document.getElementById('categorySelect').addEventListener('change', validateForm);
     ajoutImage ()
   }
-
+  
+  function boutonCliquable() {
+    const ajoutImageInput = document.getElementById("ajoutImage");
+    const ajoutImageButton = document.querySelector("#modale2fichier button");
+  
+    ajoutImageButton.addEventListener("click", function(event) {
+      event.preventDefault();
+      ajoutImageInput.click();
+    });
+  }
 // ------------------- Evenements -----------------------------
 // ------------------- Evenements -----------------------------
 // ------------------- Evenements -----------------------------

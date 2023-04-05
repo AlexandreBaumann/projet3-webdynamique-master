@@ -337,7 +337,7 @@ footer nav ul {
 	font-size: 16px;
 	display: flex;
 	position: absolute;
-	left: 59%;
+	left: 60%;
 	border: none;
 	background-color: white;
 	gap: 10px;
@@ -347,6 +347,7 @@ footer nav ul {
 	justify-content: center;
 	align-items: center;
 	margin-bottom: 20px;
+	
 
 }
 #h2modif {
@@ -365,6 +366,8 @@ footer nav ul {
 	position: absolute;
 	width: 80%;
 	bottom: -30px;
+	gap:10px;
+
 }
 
 #introduction article {
@@ -376,6 +379,7 @@ footer nav ul {
 	display: flex;
 	position: absolute;
 	top: -30px;
+	gap:10px;
 }
 
 
@@ -544,6 +548,7 @@ font-weight: 400;
 	justify-content: center;
 	align-items: center;
 	border-radius: 3px;
+	cursor: pointer;
 }
 
 #modale2fichier button {
