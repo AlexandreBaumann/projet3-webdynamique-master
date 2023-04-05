@@ -319,14 +319,13 @@ var modale2DisplayStyle = window.getComputedStyle(modale2).display;
     document.getElementById('titre').addEventListener('input', validateForm);
     document.getElementById('categorySelect').addEventListener('change', validateForm);
     ajoutImage ()
+    boutonCliquable()
   }
   
   function boutonCliquable() {
     const ajoutImageInput = document.getElementById("ajoutImage");
     const ajoutImageButton = document.querySelector("#modale2fichier button");
-  
-    ajoutImageButton.addEventListener("click", function(event) {
-      event.preventDefault();
+    ajoutImageButton.addEventListener("click", function() {
       ajoutImageInput.click();
     });
   }
@@ -366,10 +365,15 @@ function ajoutImage () {
         notLastChildren.forEach(child => { child.style.display = 'none';  });
       ;
   });
-  valider.addEventListener('click', function () {
-    var event = envoiImage();
+  valider.addEventListener('click', function (event) {
     event.preventDefault();
-  });
+    envoiImage();
+  })
+  // valider.addEventListener('click', function (event) {
+  //   event.preventDefault();
+  //   var envoi = envoiImage();
+  //   envoi.preventDefault();
+  //  }) 
 }
 
 async function envoiImage() {
