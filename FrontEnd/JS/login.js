@@ -1,6 +1,3 @@
-// synthaxe ES6 avec les modules pour intégrer plusieurs fichiers
-
-
 
 document.getElementById("formulaire").addEventListener("submit", login);
 

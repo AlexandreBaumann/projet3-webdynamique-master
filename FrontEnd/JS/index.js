@@ -96,7 +96,6 @@ main();
        Le clic appelle la fonction filterData et lui envoyer l'ID, transformé en nombre, comme paramètre.
 
    5 - Si le paramètre est 0, tout est affiché, sinon sont affichées les entrées dont la categoryId est égale au paramètre.   
-
 */
 
 function logoutMenu() {
@@ -135,7 +134,6 @@ function iconDisplay() {
                           <div class="gallery">
                           </div>
                           `
-  // document.querySelector("#filtres").style.display = 'none'; ne marche pas
   document.getElementById("divModif").addEventListener("click", modaleDisplay);
   const introduction = document.querySelector('#introduction');
   introduction.innerHTML = 
@@ -159,7 +157,8 @@ function filterSupp () {
     filtre.style.display = "none";
   });
   const gallerieDiv = document.querySelector(".gallery")
-  gallerieDiv.style.marginTop = "60px";}
+  gallerieDiv.style.marginTop = "60px";
+}
 
 
 /* ---------------------------- Modale ---------------------------*/
@@ -265,7 +264,6 @@ async function modaleGalerie() {
       retrait.preventDefault();
     });
   });
-
 } 
 
 async function imgSupp(id) {
