@@ -20,7 +20,7 @@ function login(event) {
       if (response.ok) {
         return response.json();
       } else {
-        const errorMessage = `<p id="error-message">Erreur dans l’identifiant ou le mot de passe </p>`;
+        const errorMessage = `<p class="errorMessage">Erreur dans l’identifiant ou le mot de passe </p>`;
         // document.getElementById("login").insertAdjacentHTML('beforebegin', errorMessage);
         document.getElementById("erreur").innerHTML = errorMessage;
       }

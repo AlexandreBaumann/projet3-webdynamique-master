@@ -125,7 +125,7 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
-#filtres {
+#filters {
 	display:flex;
 	align-items: center;
 	justify-content: center;
@@ -136,7 +136,7 @@ li:hover {
 
 }
 
-#filtres input {
+#filters input {
 	border-radius: 60px;
 	border: 2px solid #1D6154;
 	height: 37px;
@@ -153,7 +153,7 @@ li:hover {
 	background-color: white;
 }
 
-#filtres input:hover {
+#filters input:hover {
 	background-color: #1D6154;
 	color: white;
 }
@@ -270,15 +270,16 @@ footer nav ul {
 #formulaire a {
 	color: #3D3D3D;
 }
-#error-message {
+.errorMessage {
 	color: red;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 
 /* ---------- topBar ------------*/
 
-#barre_superieure {
+#topBar {
 	background-color: black;
 	height: 60px;
 	width: 100% ;
@@ -410,7 +411,7 @@ footer nav ul {
 	display: flex;
 }
 
-#fermerModale1, #fermerModale2 {
+#closeModale1, #closeModale2 {
 	background-color: white;
 	border: none;
 	text-align: end;
@@ -429,7 +430,7 @@ footer nav ul {
 }
 
 
-#galerieModale{
+#galleryModale{
 	flex:auto;
 	border-bottom: solid 2px #B3B3B3;
 	display: flex;
@@ -475,8 +476,8 @@ footer nav ul {
 	justify-content: space-around;
 }
 
-#ajoutModale1,
-#suppGallerie {
+#addModale1,
+#suppGallery {
   font-family: 'Syne', sans-serif;
   width: 40%;
   margin: 2% auto 1%;
@@ -485,7 +486,7 @@ footer nav ul {
   text-align: center;
 }
 
-#ajoutModale1 {
+#addModale1 {
 	background-color: #1D6154;
 	color: white;
 	font-weight: 700;
@@ -493,7 +494,7 @@ footer nav ul {
 	line-height: 200%;
 }
   
-#suppGallerie {
+#suppGallery {
 background-color: white;
 border: none;
 color: #D65353;
@@ -510,13 +511,13 @@ font-weight: 400;
 	display: flex;
 	width: 95%;
 }
-#retourModale{
+#backModale{
 	margin-right: auto;
 	border: none;
 	background-color: white;
 }
 #modale2 {
-	display: flex;
+	display: none;
 	flex-direction: column;
   width:100%;
   justify-content: space-between;
@@ -524,7 +525,7 @@ font-weight: 400;
 	padding-bottom: 5%;
 }
 
-#ajoutImage { display: none;}
+#addImage { display: none;}
 
 #ajoutItem {
   width: 60%;
@@ -540,7 +541,7 @@ font-weight: 400;
 	margin-top: 10%;
 	margin-bottom: 10%;
 }
-#ajoutItem #modale2fichier {
+#ajoutItem #modale2file {
 	display: flex;
 	flex-direction: column;
 	background-color:#E8F1F6;
@@ -550,7 +551,7 @@ font-weight: 400;
 	border-radius: 3px;
 }
 
-#modale2fichier button {
+#modale2file button {
 	border:none;
 	background-color: #CBD6DC;
 	color:#306685;
@@ -558,18 +559,15 @@ font-weight: 400;
 	padding: 10px 20px 10px 20px;
 }
 
-#validerModale2 {
+#validationModale2 {
 	border:none;
-	background-color: #1D6154;
+	background-color: #A7A7A7;
 	font-weight: 700;
 	color:white;
 	border-radius: 50px;
 	padding: 10px 20px 10px 20px;
 }
 
-#validerModale2:disabled {
-	background-color: #A7A7A7;
-}
 
 
 #ajoutItem p{
@@ -603,7 +601,7 @@ font-weight: 400;
 #image-preview {
 	height: 100%;
 	justify-content: center;
-
+	display: none;
 }
 #preview-img {
 	box-sizing: border-box;
@@ -611,4 +609,12 @@ font-weight: 400;
 	object-fit: cover;
 	height: 100%;
 
+}
+
+/* ///////////////// Autre  ///////////////////////*/
+/* ///////////////// Autre  ///////////////////////*/
+/* ///////////////// Autre  ///////////////////////*/
+
+a:hover, button:hover, label:hover, .fa-trash-can:hover {
+	cursor: pointer;
 }

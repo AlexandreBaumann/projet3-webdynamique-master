@@ -2,6 +2,9 @@
 // localhost:5678/api-docs/
 // http://127.0.0.1:5500/FrontEnd/index.html
 
+// Ajouter un message d'erreur tant que tous les champs ne sont pas remplis dans le formulaire d'ajout
+
+
 
 var data_Api;
 var filteredData;
@@ -33,27 +36,27 @@ function displayData(data) {
 }
 
 
-// Affichage des filtres
-// Affichage des filtres
-// Affichage des filtres
-// Affichage des filtres
+// Affichage des filters
+// Affichage des filters
+// Affichage des filters
+// Affichage des filters
 
-function displayFiltres(filtres) {
+function displayFilters(filters) {
   const gallery = document.querySelector("#portfolio .gallery");
-  const filtresDIV = document.createElement("div");
-  filtresDIV.setAttribute("id", "filtres");
-  gallery.before(filtresDIV);
+  const filtersDIV = document.createElement("div");
+  filtersDIV.setAttribute("id", "filters");
+  gallery.before(filtersDIV);
 
-  let filtresHTML = "";
-  for (let filtre of filtres) {
-    filtresHTML += `<input type="button" id="${filtres.indexOf(filtre)}" value="${filtre}">`;
+  let filtersHTML = "";
+  for (let filter of filters) {
+    filtersHTML += `<input type="button" id="${filters.indexOf(filter)}" value="${filter}">`;
   }
-  filtresDIV.innerHTML = filtresHTML;
+  filtersDIV.innerHTML = filtersHTML;
 
-  const boutons = document.querySelectorAll("#filtres input");
-  boutons.forEach((bouton) =>
-    bouton.addEventListener("click", () =>
-      filterData(parseInt(bouton.id))
+  const buttons = document.querySelectorAll("#filters input");
+  buttons.forEach((button) =>
+    button.addEventListener("click", () =>
+      filterData(parseInt(button.id))
     ));
 }
 // Filtrage des données récupérées par l'API
@@ -75,14 +78,14 @@ function filterData(ID) {
 
 async function main() {
   const api_url = "http://localhost:5678/api/works";
-  const filtres = ["Tous", "Objets", "Appartements", "Hôtels & restaurants"];
+  const filters = ["Tous", "Objets", "Appartements", "Hôtels & restaurants"];
   await fetchData(api_url);
-  displayFiltres(filtres);
+  displayFilters(filters);
   logged();
   displayData(data_Api);
 }
 
-main();
+
 
 /* Déroulé 
    1 - En premier, la fonction fetchData va récupérer le tableau de données de l'API.
@@ -90,7 +93,7 @@ main();
        
    2 - Une fois qu'il est obtenu, la gallerie est affichée par défaut grace à displayData.
 
-   3 - displayFiltres affiche les filtres (Rq: les catégories devraient être extraites de l'API au lieu d'être énumérées)
+   3 - displayFilters affiche les filters (Rq: les catégories devraient être extraites de l'API au lieu d'être énumérées)
 
    4 - Une fois affichés, un "eventListener" est appliqué à chaque bouton. Il faut transformer l'ID en nombre grâceà parseInt.
        Le clic appelle la fonction filterData et lui envoyer l'ID, transformé en nombre, comme paramètre.
@@ -116,7 +119,7 @@ function barTop() {
                       </button>
                       <p id="publication" > Publier les changements </p>
                       `;
-  topBar.setAttribute("id", "barre_superieure");
+  topBar.setAttribute("id", "topBar");
 
   html.insertBefore(topBar, body);
 }
@@ -152,12 +155,12 @@ function iconDisplay() {
                           </section>`
 }
 function filterSupp () {
-  const filtres = document.querySelectorAll("#filtres > *");
-  filtres.forEach((filtre) => {
-    filtre.style.display = "none";
+  const filters = document.querySelectorAll("#filters > *");
+  filters.forEach((filter) => {
+    filter.style.display = "none";
   });
-  const gallerieDiv = document.querySelector(".gallery")
-  gallerieDiv.style.marginTop = "60px";
+  const galleryDiv = document.querySelector(".gallery")
+  galleryDiv.style.marginTop = "60px";
 }
 
 
@@ -176,54 +179,40 @@ function logged() {
 // test de token : console.log(localStorage.getItem("token"))
 
 
-function modaleItems(data) {
-  data.forEach((element) => {
-    document.querySelector('#galerieModale').innerHTML += `
-    <figure id="modaleItem">
-        <img src=${element.imageUrl}>
-        <i class="fa-solid fa-trash-can" id="${element.id}"></i>
-        <figcaption> Editer </figcaption>
-    </figure>
-    `;
-  });
-}
-
-
-
 function modaleDisplay () {
   const body = document.querySelector('body');
   const modale = document.createElement('aside');
   modale.id = "modale"
   modale.innerHTML = `<div id="modaleContent">
                         <div id="modale1">
-                          <button type = "button" id= "fermerModale1" value = "fermer">X</button>
+                          <button type = "button" id= "closeModale1" value = "fermer">X</button>
                           <h3>Galerie Photo </h3>
-                          <div id= "galerieModale">
+                          <div id= "galleryModale">
                           </div>
                           <div id="boutonsModale1">
-                            <button type = "button" id= "ajoutModale1" value = "ajout">Ajouter une photo</button>
-                            <button type = "button" id= "suppGallerie" value = "suppGallerie">Supprimer la gallerie</button>                         
+                            <button type = "button" id= "addModale1" value = "ajout">Ajouter une photo</button>
+                            <button type = "button" id= "suppGallery" value = "suppGallery">Supprimer la gallerie</button>                         
                           </div>
                         </div>
-                        <div id="modale2" style="display: none;">
+                        <div id="modale2">
                           <div id="modaleTop">
-                            <button type = "button" id= "retourModale" value = "retour"><i class="fa-solid fa-arrow-left"></i></button>
-                            <button type = "button" id= "fermerModale2" value = "fermer">X</button>
+                            <button type = "button" id= "backModale" value = "retour"><i class="fa-solid fa-arrow-left"></i></button>
+                            <button type = "button" id= "closeModale2" value = "fermer">X</button>
                           </div>
                             <h3>Ajout Photo </h3>
-                          <form action="http://localhost:5678/api/works/" enctype="multipart/form-data" method="post" id= "ajoutItem">
-                            <label for="ajoutImage" id="modale2fichier">
+                          <form id= "ajoutItem">
+                            <label for="addImage" id="modale2file">
                                 <i class="fa-solid fa-image"></i>
                                 <button type = "button">+ Ajouter Photo</button>
                                 <p> jpg, png: 4mo max </p>
-                              <input type = "file" accept="image/png, image/jpeg" id="ajoutImage">
-                              <div id="image-preview" style="display: none;">
+                              <input type = "file" accept="image/png, image/jpeg" id="addImage">
+                              <div id="image-preview">
                                 <img id="preview-img" src="" alt="Image miniature"/>
                               </div>
                             </label>
                             <div class="modale2champs">
-                              <label for="titre">Titre</label>
-                              <input type="texte" id="titre" name="Titre">
+                              <label for="title">Titre</label>
+                              <input type="texte" id="title" name="title">
                             </div>
                             <div class="modale2champs">
                               <label for="categorySelect">Catégorie</label>
@@ -235,13 +224,14 @@ function modaleDisplay () {
                               </select>
                             </div>
                             <div id="separation"></div>
-                            <button type="button" disabled="true" id= "validerModale2" value = "valider">Valider</button>
+                            <div id="addItemError" class="errorMessage"></div>
+                            <button type="button" id= "validationModale2" value = "valider">Valider</button>
                           </form>
                         </div>
                       </div>
                       `;
     body.appendChild(modale);
-    modaleGalerie ();
+    modaleGallery ();
     eventModale ();
 }
 
@@ -251,22 +241,19 @@ function modaleDisplay () {
 // ------------------- Gallerie -----------------------------
 // ------------------- Gallerie -----------------------------
 
-async function modaleGalerie() {
-
-  await fetchData("http://localhost:5678/api/works");
-  modaleItems(data_Api)
-  document.querySelectorAll("#modaleItem i").forEach(item => {
-    item.addEventListener("click", async (event) => {
-      event.preventDefault();
-      // event.stopPropagation(); // ne stoppe rien :s
-      await imgSupp(event.target.id); // Attend la fin de l'exécution de la fonction imgSupp avant de continuer
-      var retrait = document.getElementById(event.target.id).parentNode.remove();
-      retrait.preventDefault();
-    });
+function modaleItems(data) {
+  data.forEach((element) => {
+    document.querySelector('#galleryModale').innerHTML += `
+    <figure id="modaleItem">
+        <img src=${element.imageUrl}>
+        <i class="fa-solid fa-trash-can" id="${element.id}"></i>
+        <figcaption> Editer </figcaption>
+    </figure>
+    `;
   });
-} 
+}
 
-async function imgSupp(id) {
+async function deleteItem(id) {
   const header = {
     Authorization: "Bearer "+ localStorage.getItem("token")
   }
@@ -281,13 +268,28 @@ async function imgSupp(id) {
     }
     return response.json();
   })
-  .then(data => {
+  .then(response => {
     console.log(`Element ${id} a été supprimé`);
   })
   .catch(error => {
     console.error('Il y a eu un problème dans la suppression:', error);
   });
 }
+
+async function modaleGallery() {
+
+  await fetchData("http://localhost:5678/api/works");
+  modaleItems(data_Api)
+  document.querySelectorAll("#modaleItem i").forEach(item => {
+    item.addEventListener("click", async (event) => {
+      event.preventDefault();
+      await deleteItem(event.target.id); // Attend la fin de l'exécution de la fonction deleteItem avant de continuer
+      var retrait = document.getElementById(event.target.id).parentNode.remove();
+      retrait.preventDefault();
+    });
+  });
+} 
+
 
 // ------------------- Gestion d'évenements -----------------------------
 // ------------------- Gestion d'évenements -----------------------------
@@ -296,35 +298,28 @@ async function imgSupp(id) {
 // ------------------- Gestion d'évenements -----------------------------
 
 function eventModale () {
-var modale = document.getElementById('modale');
-var modaleDisplayStyle = window.getComputedStyle(modale).display;
-var modale1 = document.getElementById('modale1');
-var modale1DisplayStyle = window.getComputedStyle(modale1).display;
-var modale2 = document.getElementById('modale2');
-var modale2DisplayStyle = window.getComputedStyle(modale2).display;
 
     document.getElementById("modale").addEventListener("click", (event) => {
       if (event.target === event.currentTarget) { //event.target = élément DOM sur lequel l'événement a été déclenché (=cliqué); event.currentTarget = l'élément sur lequel le gestionnaire d'événements a été attaché (dans ce cas, #modale)
         closeModale();
       }
     });
-    document.getElementById("fermerModale1").addEventListener("click", closeModale);
-    document.getElementById("ajoutModale1").addEventListener("click", modaleDisplay2);
-    document.getElementById("fermerModale2").addEventListener("click", closeModale);
-    document.getElementById("retourModale").addEventListener("click", retourModale1);
-
-    document.getElementById('ajoutImage').addEventListener('change', validateForm);
-    document.getElementById('titre').addEventListener('input', validateForm);
+    document.getElementById("closeModale1").addEventListener("click", closeModale);
+    document.getElementById("addModale1").addEventListener("click", displayModale2);
+    document.getElementById("closeModale2").addEventListener("click", closeModale);
+    document.getElementById("backModale").addEventListener("click", returnToModale1);
+    document.getElementById('addImage').addEventListener('change', validateForm);
+    document.getElementById('title').addEventListener('input', validateForm);
     document.getElementById('categorySelect').addEventListener('change', validateForm);
-    ajoutImage ()
-    boutonCliquable()
+    addImage ()
+    clickableButton()
   }
   
-  function boutonCliquable() {
-    const ajoutImageInput = document.getElementById("ajoutImage");
-    const ajoutImageButton = document.querySelector("#modale2fichier button");
-    ajoutImageButton.addEventListener("click", function() {
-      ajoutImageInput.click();
+  function clickableButton() {
+    const addImageInput = document.getElementById("addImage");
+    const addImageButton = document.querySelector("#modale2file button");
+    addImageButton.addEventListener("click", function() {
+      addImageInput.click();
     });
   }
 // ------------------- Evenements -----------------------------
@@ -335,22 +330,22 @@ var modale2DisplayStyle = window.getComputedStyle(modale2).display;
 function closeModale (){
   document.querySelector('#modale').remove()
 }
-function retourModale1() {
+function returnToModale1() {
   document.getElementById("modale2").style.display = "none";
   document.getElementById("modale1").style.display = "flex";
 }
 
-function modaleDisplay2 () {
+function displayModale2 () {
   document.getElementById("modale1").style.display = "none";
   document.getElementById("modale2").style.display = "flex"
 }
 
-function ajoutImage () {
-  const ajoutImage = document.getElementById('ajoutImage');
+function addImage () {
+  const addImage = document.getElementById('addImage');
   const preview = document.getElementById('preview-img');
-  const valider = document.getElementById('validerModale2')
+  const validate = document.getElementById('validationModale2')
 
-  ajoutImage.addEventListener('change', function (event) {
+  addImage.addEventListener('change', function (event) {
       const file = event.target.files[0];
       if (!file) return;
       const reader = new FileReader();
@@ -359,34 +354,39 @@ function ajoutImage () {
           document.getElementById('image-preview').style.display = 'flex';
       };
       reader.readAsDataURL(file);
-      const notLastChildren = document.querySelectorAll('#modale2fichier > *:not(:last-child)');
+      const notLastChildren = document.querySelectorAll('#modale2file > *:not(:last-child)');
         notLastChildren.forEach(child => { child.style.display = 'none';  });
       ;
   });
-  valider.addEventListener('click', function (event) {
+
+
+  validate.addEventListener('click', function (event) {
     event.preventDefault();
-    envoiImage();
+    
+    var addImage = document.getElementById('addImage').files.length > 0;
+    var title = document.getElementById('title').value.trim() !== '';
+    var categorySelect = document.getElementById('categorySelect').value !== '';
+        if (addImage && title && categorySelect) {
+          addNewItem();
+        }
+        if (!addImage || !title || !categorySelect) {
+          document.getElementById('addItemError').innerHTML= `Veuillez renseigner tous les champs`
+        }
   })
-  // valider.addEventListener('click', function (event) {
-  //   event.preventDefault();
-  //   var envoi = envoiImage();
-  //   envoi.preventDefault();
-  //  }) 
 }
 
-async function envoiImage() {
+async function addNewItem() {
   const tokenData = localStorage.getItem("token");
-  const titre = document.getElementById("titre").value;
+  const title = document.getElementById("title").value;
   const categorie = document.getElementById("categorySelect").value;
-  const newImage = document.getElementById("ajoutImage");
+  const newImage = document.getElementById("addImage");
 
   const formData = new FormData();
-  formData.append('title', titre);
+  formData.append('title', title);
   formData.append('category', categorie);
   formData.append('image', newImage.files[0])
   
   const header = {
-    // "Content-Type": "multipart/form-data",
     Authorization: "Bearer "+ tokenData
   }
 
@@ -408,19 +408,17 @@ async function envoiImage() {
  
 
 function validateForm() {
-  var ajoutImage = document.getElementById('ajoutImage').files.length > 0;
-  var titre = document.getElementById('titre').value.trim() !== '';
+  var addImage = document.getElementById('addImage').files.length > 0;
+  var title = document.getElementById('title').value.trim() !== '';
   var categorySelect = document.getElementById('categorySelect').value !== '';
 
-  if (ajoutImage && titre && categorySelect) {
-    document.getElementById('validerModale2').disabled = false;
+  if (addImage && title && categorySelect) {
+    document.getElementById('validationModale2').style.backgroundColor = "#1D6154";
+  }
+  if (!addImage || !title || !categorySelect) {
+    document.getElementById('validationModale2').style.backgroundColor = "#A7A7A7";
   }
 }
  
-
-// ajouter un message d'erreur à la place de l'alerte sur l'erreur de login ; 
-
-
-// quand on rajoute une photo, elle se met en dernier (rajouter dernier élément au cache ou recharger le tableau)
-// En créer une et tester la fonction suppression
+main();
  
