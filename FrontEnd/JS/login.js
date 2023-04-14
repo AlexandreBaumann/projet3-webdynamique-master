@@ -1,7 +1,6 @@
 
 document.getElementById("formulaire").addEventListener("submit", login);
 
-// Créer un gestionnaire d'événement onclick
 function login(event) {
   event.preventDefault()
     const username = document.getElementById("email").value;
@@ -21,7 +20,6 @@ function login(event) {
         return response.json();
       } else {
         const errorMessage = `<p class="errorMessage">Erreur dans l’identifiant ou le mot de passe </p>`;
-        // document.getElementById("login").insertAdjacentHTML('beforebegin', errorMessage);
         document.getElementById("erreur").innerHTML = errorMessage;
       }
     })
@@ -32,5 +30,4 @@ function login(event) {
     })
     .catch(error => console.error("Erreur :", error));
   }
-  // console.log(localStorage.getItem("token"))
  

@@ -2,12 +2,9 @@
 // localhost:5678/api-docs/
 // http://127.0.0.1:5500/FrontEnd/index.html
 
-// Ajouter un message d'erreur tant que tous les champs ne sont pas remplis dans le formulaire d'ajout
-
-
-
 var data_Api;
 var filteredData;
+const api_url = "http://localhost:5678/api/works";
 
 // Fonction de récupération des données de l'API
 // Fonction de récupération des données de l'API
@@ -77,11 +74,10 @@ function filterData(ID) {
 // Fonction de synthèse
 
 async function main() {
-  const api_url = "http://localhost:5678/api/works";
   const filters = ["Tous", "Objets", "Appartements", "Hôtels & restaurants"];
   await fetchData(api_url);
   displayFilters(filters);
-  logged();
+  isLogged();
   displayData(data_Api);
 }
 
@@ -90,14 +86,10 @@ async function main() {
 /* Déroulé 
    1 - En premier, la fonction fetchData va récupérer le tableau de données de l'API.
        Le reste attend que le tableau soit apporté (await)
-       
    2 - Une fois qu'il est obtenu, la gallerie est affichée par défaut grace à displayData.
-
    3 - displayFilters affiche les filters (Rq: les catégories devraient être extraites de l'API au lieu d'être énumérées)
-
    4 - Une fois affichés, un "eventListener" est appliqué à chaque bouton. Il faut transformer l'ID en nombre grâceà parseInt.
        Le clic appelle la fonction filterData et lui envoyer l'ID, transformé en nombre, comme paramètre.
-
    5 - Si le paramètre est 0, tout est affiché, sinon sont affichées les entrées dont la categoryId est égale au paramètre.   
 */
 
@@ -137,7 +129,7 @@ function iconDisplay() {
                           <div class="gallery">
                           </div>
                           `
-  document.getElementById("divModif").addEventListener("click", modaleDisplay);
+  document.getElementById("divModif").addEventListener("click", displayModale);
   const introduction = document.querySelector('#introduction');
   introduction.innerHTML = 
                           `<section id="introduction">
@@ -167,7 +159,7 @@ function filterSupp () {
 /* ---------------------------- Modale ---------------------------*/
 /* ---------------------------- Modale ---------------------------*/
 /* ---------------------------- Modale ---------------------------*/
-function logged() {
+function isLogged() {
   const token = localStorage.getItem("token");
   if (token) {
     barTop();
@@ -179,7 +171,7 @@ function logged() {
 // test de token : console.log(localStorage.getItem("token"))
 
 
-function modaleDisplay () {
+function displayModale () {
   const body = document.querySelector('body');
   const modale = document.createElement('aside');
   modale.id = "modale"
@@ -241,7 +233,7 @@ function modaleDisplay () {
 // ------------------- Gallerie -----------------------------
 // ------------------- Gallerie -----------------------------
 
-function modaleItems(data) {
+function displayModaleItems(data) {
   data.forEach((element) => {
     document.querySelector('#galleryModale').innerHTML += `
     <figure id="modaleItem">
@@ -278,8 +270,8 @@ async function deleteItem(id) {
 
 async function modaleGallery() {
 
-  await fetchData("http://localhost:5678/api/works");
-  modaleItems(data_Api)
+  await fetchData(api_url);
+  displayModaleItems(data_Api)
   document.querySelectorAll("#modaleItem i").forEach(item => {
     item.addEventListener("click", async (event) => {
       event.preventDefault();
