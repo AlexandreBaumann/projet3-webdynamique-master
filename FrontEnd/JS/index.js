@@ -223,7 +223,7 @@ function displayModale () {
                       </div>
                       `;
     body.appendChild(modale);
-    modaleGallery ();
+    displayModaleGallery ();
     eventModale ();
 }
 
@@ -268,7 +268,7 @@ async function deleteItem(id) {
   });
 }
 
-async function modaleGallery() {
+async function displayModaleGallery() {
 
   await fetchData(api_url);
   displayModaleItems(data_Api)
@@ -276,8 +276,7 @@ async function modaleGallery() {
     item.addEventListener("click", async (event) => {
       event.preventDefault();
       await deleteItem(event.target.id); // Attend la fin de l'exécution de la fonction deleteItem avant de continuer
-      var retrait = document.getElementById(event.target.id).parentNode.remove();
-      retrait.preventDefault();
+      document.getElementById(event.target.id).parentNode.remove();
     });
   });
 } 
@@ -382,7 +381,7 @@ async function addNewItem() {
     Authorization: "Bearer "+ tokenData
   }
 
-  fetch("http://localhost:5678/api/works/", {
+  fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: header,
     body: formData,
@@ -398,7 +397,6 @@ async function addNewItem() {
   .catch(error => console.error("Erreur :", error));
 }
  
-
 function validateForm() {
   var addImage = document.getElementById('addImage').files.length > 0;
   var title = document.getElementById('title').value.trim() !== '';
