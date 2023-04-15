@@ -381,7 +381,7 @@ async function addNewItem() {
     Authorization: "Bearer "+ tokenData
   }
 
-  fetch("http://localhost:5678/api/works", {
+  fetch(api_url, {
     method: "POST",
     headers: header,
     body: formData,
